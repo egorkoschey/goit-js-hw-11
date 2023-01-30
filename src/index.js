@@ -26,6 +26,11 @@ function onSearch(e) {
     imgApi.getImage().then(data => {
         imgApi.totalHits = data.totalHits;
         renderGallery(data);
+        if (imgApi.totalHits < 40) {
+            renderGallery(data);
+            getEl('.load-more').classList.add('is-hidden');
+            Notiflix.Notify.failure("We're sorry but you've reached the end of the search result")
+        }
     }).catch(error => {
         console.log(error);
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
